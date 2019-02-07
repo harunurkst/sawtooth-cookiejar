@@ -129,8 +129,10 @@ class CookieJarClient(object):
         try:
             if data is not None:
                 result = requests.post(url, headers=headers, data=data)
+                print("result with data: ", result.json())
             else:
                 result = requests.get(url, headers=headers)
+                print("result withour data", result.json())
 
             if not result.ok:
                 raise Exception("Error {}: {}".format(
@@ -154,6 +156,7 @@ class CookieJarClient(object):
             while waited < wait:
                 result = self._send_to_rest_api("batch_statuses?id={}&wait={}"
                                                .format(batch_id, wait))
+                #print("result is: ", result)
                 status = yaml.safe_load(result)['data'][0]['status']
                 waited = time.time() - start_time
 
@@ -216,12 +219,15 @@ class CookieJarClient(object):
 
         # Create a Batch List from Batch above
         batch_list = BatchList(batches=[batch])
+        
         batch_id = batch_list.batches[0].header_signature
+        #print("batch id:", batch_id)
 
         # Send batch_list to the REST API
         result = self._send_to_rest_api("batches",
                                        batch_list.SerializeToString(),
                                        'application/octet-stream')
+        
 
         # Wait until transaction status is COMMITTED, error, or timed out
         return self._wait_for_status(batch_id, wait, result)
