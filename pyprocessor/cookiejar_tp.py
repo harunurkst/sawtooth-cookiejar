@@ -18,6 +18,8 @@ CookieJarTransactionHandler class interfaces for cookiejar Transaction Family.
 
 import hashlib
 import logging
+import traceback
+import sys
 
 from sawtooth_sdk.processor.handler import TransactionHandler
 from sawtooth_sdk.processor.exceptions import InvalidTransaction
