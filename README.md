@@ -81,6 +81,8 @@ To run sawtooth-simplewallet without dockers, we'll have to use a Ubuntu 16.04 O
 
 
 1. Install Sawtooth on an Ubuntu 16.04 LTS x64 machine. See the [Sawtooth Applications Developer's Guide](https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/ubuntu.html)
+2.  install the DevMode consensus engine package.
+`sudo apt-get install sawtooth-devmode-engine-rust`
 2. Create the Genesis Block. See Guide in previous step
 3. Install transaction processor and client-required packages:
 - listed under the `RUN` line in file `pyprocessor/Dockerfile`
@@ -95,6 +97,7 @@ To run sawtooth-simplewallet without dockers, we'll have to use a Ubuntu 16.04 O
 - Edit file `pyclient/cookiejar.py` change `rest-api:8008` to `localhost:8008`
 6. Start the Validator, REST API, and Settings TP in separate terminal windows:
 - `sudo -u sawtooth sawtooth-validator -vv`
+- `sudo -u sawtooth devmode-engine-rust -vv --connect tcp://localhost:5050`
 - `sudo -u sawtooth sawtooth-rest-api -vvv`
 - `sudo -u sawtooth settings-tp -vv`
 7. Start the cookie jar transaction processor with

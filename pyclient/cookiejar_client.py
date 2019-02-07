@@ -129,10 +129,10 @@ class CookieJarClient(object):
         try:
             if data is not None:
                 result = requests.post(url, headers=headers, data=data)
-                print("result with data: ", result.json())
+                #print("result with data: ", result.json())
             else:
                 result = requests.get(url, headers=headers)
-                print("result withour data", result.json())
+                #print("result without data", result.json())
 
             if not result.ok:
                 raise Exception("Error {}: {}".format(
